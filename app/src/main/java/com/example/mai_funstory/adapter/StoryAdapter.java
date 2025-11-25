@@ -1,55 +1,49 @@
 package com.example.mai_funstory.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context;
+import android.view.*;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mai_funstory.MainActivity;
 import com.example.mai_funstory.R;
 import com.example.mai_funstory.model.StoryEntity;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryVH> {
+public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.Holder> {
 
-    List<StoryEntity> list;
-    IClick listener;
+    private final ArrayList<StoryEntity> list;
+    private final Context context;
 
-    public interface IClick {
-        void onClick(int pos);
-    }
-
-    public StoryAdapter(List<StoryEntity> list, IClick listener) {
+    public StoryAdapter(ArrayList<StoryEntity> list, Context context) {
         this.list = list;
-        this.listener = listener;
+        this.context = context;
     }
 
     @Override
-    public StoryVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_story, parent, false);
-        return new StoryVH(v);
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(context)
+                .inflate(R.layout.item_story, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(StoryVH h, int pos) {
-        h.tvStory.setText(list.get(pos).getTitle());
-        h.itemView.setOnClickListener(v -> listener.onClick(pos));
+    public void onBindViewHolder(Holder h, int pos) {
+        StoryEntity s = list.get(pos);
+        h.tv.setText(s.getName());
+        h.itemView.setOnClickListener(v ->
+                ((MainActivity)context).gotoM003Screen(list, s)
+        );
     }
 
     @Override
-    public int getItemCount() {
-        return list.size();
-    }
+    public int getItemCount() { return list.size(); }
 
-    class StoryVH extends RecyclerView.ViewHolder {
-        TextView tvStory;
-
-        public StoryVH(View v) {
-            super(v);
-            tvStory = v.findViewById(R.id.tvStory);
+    public static class Holder extends RecyclerView.ViewHolder {
+        TextView tv;
+        public Holder(View itemView) {
+            super(itemView);
+            tv = itemView.findViewById(R.id.tv_story);
         }
     }
 }

@@ -2,44 +2,50 @@ package com.example.mai_funstory;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 
 import com.example.mai_funstory.model.StoryEntity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String topicName = "Trạng Quỳnh";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        gotoM000Screen();
+        showFrg(new M000SplashFrg());
     }
 
-    private void load(Fragment frg) {
+    public void showFrg(Fragment frg) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, frg)
-                .addToBackStack(null)
+                .replace(R.id.ln_main, frg)
                 .commit();
     }
 
-    public void gotoM000Screen() {
-        load(new M000SplashFrg());
-    }
-
     public void gotoM001Screen() {
-        load(new M001TopicFrg());
+        showFrg(new M001TopicFrg());
     }
 
-    public void gotoM002Screen(String topicName) {
-        load(new M002StoryFrg(topicName));
+    public void gotoM002Screen() {
+        M002StoryFrg frg = new M002StoryFrg();
+        frg.setTopicName(topicName);
+        showFrg(frg);
     }
 
-    public void gotoM003Screen(List<StoryEntity> list, int pos) {
-        load(new M003DetailStoryFrg(list, pos));
+    public void gotoM003Screen(ArrayList<StoryEntity> list, StoryEntity current) {
+        M003DetailStoryFrg frg = new M003DetailStoryFrg();
+        frg.setData(topicName, list, current);
+        showFrg(frg);
+    }
+
+    public void backToM001Screen() {
+        gotoM001Screen();
+    }
+
+    public void gotoM003Screen(ArrayList<StoryEntity> list, StoryEntity s) {
     }
 }

@@ -1,68 +1,80 @@
 package com.example.mai_funstory;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import android.view.*;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 
 import com.example.mai_funstory.adapter.StoryAdapter;
 import com.example.mai_funstory.model.StoryEntity;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class M002StoryFrg extends Fragment {
 
-    RecyclerView rvStory;
-    List<StoryEntity> list = new ArrayList<>();
-    String topic;
-
-    public M002StoryFrg(String topic) {
-        this.topic = topic;
-    }
+    private Context mContext;
+    private String topicName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.m002_frg_story, container, false);
 
-        rvStory = v.findViewById(R.id.rv_story);
-        loadStoryFile();
+        v.findViewById(R.id.iv_back).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.iv_back).setOnClickListener(v1 ->
+                ((MainActivity)getActivity()).backToM001Screen()
+        );
 
-        rvStory.setAdapter(new StoryAdapter(list, pos -> {
-            ((MainActivity) getActivity()).gotoM003Screen(list, pos);
-        }));
+        ((TextView)v.findViewById(R.id.tv_name)).setText(topicName);
+
+        RecyclerView rv = v.findViewById(R.id.rv_story);
+        ArrayList<StoryEntity> list = readStory();
+
+        StoryAdapter adapter = new StoryAdapter(list, mContext);
+        rv.setLayoutManager(new LinearLayoutManager(mContext));
+        rv.setAdapter(adapter);
 
         return v;
     }
 
-    private void loadStoryFile() {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    public void setTopicName(String topicName) { this.topicName = topicName; }
+
+    private ArrayList<StoryEntity> readStory() {
+        ArrayList<StoryEntity> list = new ArrayList<>();
+
         try {
-            InputStream is = getActivity().getAssets().open("story/" + topic + ".txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(mContext.getAssets().open("story/trangquynh.txt"), "UTF-8")
+            );
 
             String line;
-            String title = "";
-            StringBuilder content = new StringBuilder();
-
             while ((line = br.readLine()) != null) {
-                if (line.equals("','0');")) {
-                    list.add(new StoryEntity(title, content.toString()));
-                    title = "";
-                    content = new StringBuilder();
-                    continue;
+
+                String title = line.trim();
+                if (title.isEmpty()) continue;
+
+                StringBuilder content = new StringBuilder();
+                while ((line = br.readLine()) != null && !line.contains("','0');")) {
+                    content.append(line).append("\n");
                 }
 
-                if (title.equals("")) title = line;
-                else content.append(line).append("\n");
+                list.add(new StoryEntity(topicName, title, content.toString()));
             }
 
+            br.close();
+
         } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return list;
     }
 }

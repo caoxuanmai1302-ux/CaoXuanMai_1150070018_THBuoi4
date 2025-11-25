@@ -1,49 +1,42 @@
 package com.example.mai_funstory.adapter;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context;
+import android.view.*;
 import android.widget.TextView;
-
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.mai_funstory.R;
 import com.example.mai_funstory.model.StoryEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailStoryAdapter extends PagerAdapter {
 
-    List<StoryEntity> list;
+    private final List<StoryEntity> list;
+    private final Context context;
 
-    public DetailStoryAdapter(List<StoryEntity> list) {
+    public DetailStoryAdapter(ArrayList<StoryEntity> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @Override
-    public int getCount() {
-        return list.size();
-    }
+    public Object instantiateItem(ViewGroup container, int pos) {
+        View v = LayoutInflater.from(context)
+                .inflate(R.layout.item_detail_story, container, false);
 
-    @Override
-    public boolean isViewFromObject(View v, Object o) {
-        return v == o;
-    }
+        StoryEntity s = list.get(pos);
 
-    @Override
-    public Object instantiateItem(ViewGroup parent, int pos) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_detail_story, parent, false);
+        ((TextView)v.findViewById(R.id.tv_name)).setText(s.getName());
+        ((TextView)v.findViewById(R.id.tv_content)).setText(s.getContent());
 
-        TextView tv = v.findViewById(R.id.tvContent);
-        tv.setText(list.get(pos).getContent());
-
-        parent.addView(v);
+        container.addView(v);
         return v;
     }
 
-    @Override
-    public void destroyItem(ViewGroup parent, int pos, Object object) {
-        parent.removeView((View) object);
+    @Override public int getCount() { return list.size(); }
+    @Override public boolean isViewFromObject(View v, Object o) { return v == o; }
+    @Override public void destroyItem(ViewGroup container, int pos, Object obj) {
+        container.removeView((View)obj);
     }
 }

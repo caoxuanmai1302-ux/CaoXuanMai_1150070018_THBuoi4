@@ -1,13 +1,34 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20dp"
-    android:background="@color/greenSuperLight"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/tvContent"
-        android:textSize="20sp"
-        android:textColor="@color/greenDark"
+        android:id="@+id/tv_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</ScrollView>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tên truyện"
+        android:textColor="#2E7D32"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nội dung truyện"
+            android:textSize="18sp"
+            android:lineSpacingExtra="6dp"
+            android:padding="10dp"/>
+
+    </ScrollView>
+
+</LinearLayout>
