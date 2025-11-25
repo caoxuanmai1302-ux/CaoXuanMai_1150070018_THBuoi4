@@ -1,6 +1,0 @@
-Trạng đi guốc
-Vua ra lệnh ai vào triều phải đi guốc thật kêu. Quỳnh khoét thủng guốc, mỗi bước kêu “cộc… bụp…”. Vua hỏi:
-– Sao guốc ngươi kêu lạ vậy?
-Quỳnh đáp:
-– Thưa vì thần nghèo, guốc thủng nên kêu hai tiếng: tiếng trước là guốc, tiếng sau là chân!
-','0');

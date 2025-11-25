@@ -21,11 +21,10 @@ public class M002StoryFrg extends Fragment {
 
     RecyclerView rvStory;
     List<StoryEntity> list = new ArrayList<>();
+    String topic;
 
-    String topic = "TrangQuynh";
-
-    public M002StoryFrg() {
-
+    public M002StoryFrg(String topic) {
+        this.topic = topic;
     }
 
     @Override
@@ -33,7 +32,6 @@ public class M002StoryFrg extends Fragment {
         View v = inflater.inflate(R.layout.m002_frg_story, container, false);
 
         rvStory = v.findViewById(R.id.rv_story);
-
         loadStoryFile();
 
         rvStory.setAdapter(new StoryAdapter(list, pos -> {
@@ -43,10 +41,9 @@ public class M002StoryFrg extends Fragment {
         return v;
     }
 
-
     private void loadStoryFile() {
         try {
-            InputStream is = getActivity().getAssets().open("story/TrangQuynh.txt");
+            InputStream is = getActivity().getAssets().open("story/" + topic + ".txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             String line;
@@ -54,7 +51,6 @@ public class M002StoryFrg extends Fragment {
             StringBuilder content = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
-
                 if (line.equals("','0');")) {
                     list.add(new StoryEntity(title, content.toString()));
                     title = "";
@@ -62,14 +58,11 @@ public class M002StoryFrg extends Fragment {
                     continue;
                 }
 
-                if (title.isEmpty()) title = line;
+                if (title.equals("")) title = line;
                 else content.append(line).append("\n");
             }
 
-            br.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

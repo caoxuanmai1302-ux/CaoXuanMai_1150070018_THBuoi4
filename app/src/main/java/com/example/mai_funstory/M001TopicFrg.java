@@ -23,24 +23,37 @@ public class M001TopicFrg extends Fragment {
 
         lnTopic = v.findViewById(R.id.lnTopic);
 
-        loadTopic();
+        loadTopics();
 
         return v;
     }
 
-    private void loadTopic() {
-        View item = getLayoutInflater().inflate(R.layout.item_topic, lnTopic, false);
+    private void loadTopics() {
+        try {
+            String[] list = getActivity().getAssets().list("photo");
 
-        ImageView imv = item.findViewById(R.id.imvTopic);
-        TextView tv = item.findViewById(R.id.tvTopic);
+            for (String fileName : list) {
 
-        tv.setText("Trạng Quỳnh");
-        imv.setImageResource(R.drawable.trangquynh);
+                View item = getLayoutInflater().inflate(R.layout.item_topic, lnTopic, false);
 
-        item.setOnClickListener(v -> {
-            ((MainActivity) getActivity()).gotoM002Screen("TrangQuynh");
-        });
+                ImageView imv = item.findViewById(R.id.imvTopic);
+                TextView tv = item.findViewById(R.id.tvTopic);
 
-        lnTopic.addView(item);
+                InputStream is = getActivity().getAssets().open("photo/" + fileName);
+                imv.setImageBitmap(BitmapFactory.decodeStream(is));
+
+                String topicName = fileName.replace(".png", "");
+                tv.setText(topicName);
+
+                item.setOnClickListener(v -> {
+                    ((MainActivity) getActivity()).gotoM002Screen(topicName);
+                });
+
+                lnTopic.addView(item);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
