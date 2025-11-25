@@ -36,16 +36,13 @@ public class MainActivity extends AppCompatActivity {
         showFrg(frg);
     }
 
-    public void gotoM003Screen(ArrayList<StoryEntity> list, StoryEntity current) {
-        M003DetailStoryFrg frg = new M003DetailStoryFrg();
-        frg.setData(topicName, list, current);
-        showFrg(frg);
-    }
-
     public void backToM001Screen() {
         gotoM001Screen();
     }
 
     public void gotoM003Screen(ArrayList<StoryEntity> list, StoryEntity s) {
+        M003DetailStoryFrg frg = new M003DetailStoryFrg();
+        frg.setData(topicName, list, s);
+        showFrg(frg);
     }
 }

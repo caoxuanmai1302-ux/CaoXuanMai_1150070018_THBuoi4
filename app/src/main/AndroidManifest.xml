@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Truyện Cười"
-        android:theme="@style/Theme.MaiFunStory">
+        android:theme="@style/Theme.Mai_funstory">
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

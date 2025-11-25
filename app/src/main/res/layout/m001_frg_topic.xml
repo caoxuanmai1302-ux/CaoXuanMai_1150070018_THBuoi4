@@ -31,7 +31,7 @@
                     android:id="@+id/iv_topic"
                     android:layout_width="140dp"
                     android:layout_height="90dp"
-                    android:src="@drawable/ic_topic_image"
+                    android:src="@drawable/trangquynh"
                     android:scaleType="centerCrop"/>
 
                 <TextView
