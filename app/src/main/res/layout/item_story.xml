@@ -1,29 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     android:orientation="vertical"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TableRow>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:src="@drawable/ic_face"
-            android:rotation="45"
-            android:padding="10dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/tvStory"
-            android:textSize="20sp"
-            android:textColor="@color/greenMid"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </TableRow>
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:paddingLeft="10dp" />
+
+    </LinearLayout>
 
     <View
-        android:background="#e5e5e5"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        android:layout_marginTop="10dp"/>
+
 </LinearLayout>

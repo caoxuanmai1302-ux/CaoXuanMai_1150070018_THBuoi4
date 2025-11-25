@@ -23,44 +23,24 @@ public class M001TopicFrg extends Fragment {
 
         lnTopic = v.findViewById(R.id.lnTopic);
 
-        loadTopics();
+        loadTopic();
 
         return v;
     }
 
-    private void loadTopics() {
-        try {
-            // Lấy danh sách icon chủ đề
-            String[] list = getActivity().getAssets().list("photo");
+    private void loadTopic() {
+        View item = getLayoutInflater().inflate(R.layout.item_topic, lnTopic, false);
 
-            for (String fileName : list) {
+        ImageView imv = item.findViewById(R.id.imvTopic);
+        TextView tv = item.findViewById(R.id.tvTopic);
 
-                // 1) Inflate item_topic.xml
-                View item = getLayoutInflater().inflate(R.layout.item_topic, lnTopic, false);
+        tv.setText("Trạng Quỳnh");
+        imv.setImageResource(R.drawable.trangquynh);
 
-                // 2) Ánh xạ
-                ImageView imv = item.findViewById(R.id.imvTopic);
-                TextView tv = item.findViewById(R.id.tvTopic);
+        item.setOnClickListener(v -> {
+            ((MainActivity) getActivity()).gotoM002Screen("TrangQuynh");
+        });
 
-                // 3) Load icon
-                InputStream is = getActivity().getAssets().open("photo/" + fileName);
-                imv.setImageBitmap(BitmapFactory.decodeStream(is));
-
-                // 4) Set tên topic
-                String topicName = fileName.replace(".png", "");
-                tv.setText(topicName);
-
-                // 5) Set sự kiện click
-                item.setOnClickListener(v -> {
-                    ((MainActivity) getActivity()).gotoM002Screen(topicName);
-                });
-
-                // 6) Add vào layout
-                lnTopic.addView(item);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        lnTopic.addView(item);
     }
 }

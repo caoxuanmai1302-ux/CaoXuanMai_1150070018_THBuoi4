@@ -1,21 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="12dp"
     android:orientation="horizontal"
+    android:padding="8dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_topic_card"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="90dp">
 
     <ImageView
         android:id="@+id/imvTopic"
-        android:layout_width="170dp"
-        android:layout_height="80dp"/>
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvTopic"
-        android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
-        android:textColor="@color/greenMid"
-        android:textSize="20sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:textColor="#2E6B2E"
+        android:textSize="20sp"
+        android:paddingLeft="12dp" />
+
 </LinearLayout>
